@@ -61,20 +61,27 @@ const email = ref('');
 const submitForm = async () => {
   try {
     const eventData = {
-        title: eventName.value,
+      title: eventName.value,
       category: eventType.value,
       start_date: startDate.value,
       end_date: endDate.value,
       email: email.value
     };
 
-
-    await postData('createEvent', eventData,
-    //to add query  { queryParams: { key: 'value' } }
+    const { data, error } =  await sendRequest(
+       'POST',
+       'createEvent',
+        eventData,
+        // { requiresAuth:  }
+       //to add query  { queryParams: { key: 'value' } }
      );
 
+     if (error) {
+      throw new Error(error.message);
+    }
 
-    console.log('Event created successfully!');
+
+    console.log('Event created successfully!', data);
 
     router.push('/');
   } catch (error) {
