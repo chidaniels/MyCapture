@@ -1,17 +1,12 @@
 import { ref } from 'vue';
 import { useUserDetailsStore } from "@/store/userDetailsStore";
 import { storeToRefs } from 'pinia';
-
 import { createPinia } from 'pinia';
+
 const pinia = createPinia();
-
 const userDetailsStore = useUserDetailsStore(pinia);
-
-
-// Destructure store values
 const {
     baseUrl,
-    userToken
 } = storeToRefs(userDetailsStore);
 
 
@@ -19,11 +14,10 @@ const data = ref(null);
 const error = ref(null);
 
 
-async function sendRequest(method, endpoint, data = null, queryParams = {}, customOptions = {}, requiresAuth = true) {
+async function handleAuth(method, endpoint, data = null, queryParams = {}, customOptions = {}) {
     try {
         const queryString = new URLSearchParams(queryParams).toString();
         let url = baseUrl.value + endpoints[endpoint] + (queryString ? `?${queryString}` : '');
-        
         const requestOptions = {
             method,
             headers: {
@@ -33,13 +27,10 @@ async function sendRequest(method, endpoint, data = null, queryParams = {}, cust
             body: data ? JSON.stringify(data) : undefined,
             ...customOptions
         };
-
-        if (requiresAuth) {
-            requestOptions.headers.authorization = `Bearer ${userToken.value}`;
-        }
-
+        
+        // Use useFetch instead of fetch
         const response = await useFetch(url, requestOptions);
-
+        
         if (!response.ok) {
             const errorData = await response.json();
             error.value = new Error(errorData.message || 'An error occurred');
@@ -56,5 +47,4 @@ async function sendRequest(method, endpoint, data = null, queryParams = {}, cust
     }
 }
 
-export { sendRequest, data, error };
-
+export { handleAuth, data, error };

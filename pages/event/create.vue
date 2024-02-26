@@ -76,10 +76,6 @@ const submitForm = async () => {
        //to add query  { queryParams: { key: 'value' } }
      );
 
-     if (error) {
-      throw new Error(error.message);
-    }
-
 
     console.log('Event created successfully!', data);
 

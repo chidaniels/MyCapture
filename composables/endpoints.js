@@ -4,6 +4,8 @@
 const endpoints = {
     createEvent: '/events',
     eventList: '/events/list',
+    loginUser:'/users/login',
+    signupUser:'/users/signup'
     
   
 // Define more endpoints here if needed
