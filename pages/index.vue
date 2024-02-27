@@ -42,34 +42,30 @@ function verifyEmailString(emailString) {
 }
 
 const onSubmit = async () => {
-  try {
-    if (!isEmailValid.value) {
-      throw new Error('Invalid email address');
-    }
-    if (!isPasswordValid.value) {
-      throw new Error('Password must be at least 8 characters');
-    }
-
-    const loginData = {
-      email: userEmail.value.trim(),
-      password: userPassword.value
-    };
-
-    const { data, error } = await handleAuth('POST', 'loginUser', loginData);
-
- 
-    if (error) {
-      throw new Error(error.message || 'An error occurred during authentication');
-    }
-
+      if (!isEmailValid.value) {
+        throw new Error('Invalid email address');
+      }
+      if (!isPasswordValid.value) {
+        throw new Error('Password must be at least 8 characters');
+      }
   
-    console.log('User authenticated successfully:', data);
-
-    localStorage.setItem('userToken', data.token);
-    router.push('/event/create');
-  } catch (error) {
-    console.error('Error logging in:', error);
-    errorMessage.value = error.message;
-  }
-};
+      const loginData = {
+        email: userEmail.value.trim(),
+        password: userPassword.value
+      };
+  
+      const { data, error } = await handleAuth('POST', 'loginUser', loginData);
+      if(data.value !== null) {
+        console.log('User authenticated successfully:', data.value);
+        localStorage.setItem('userToken', data.token);
+      router.push('/event/create');
+        }
+        if(error.value !== null) {
+          // console.error('Error logging in:', error);
+      errorMessage.value = error.value.message;
+        // throw new Error(error.value.message);
+        
+        }
+   
+  };
 </script>
