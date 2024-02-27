@@ -59,7 +59,7 @@ const endDate = ref('');
 const email = ref('');
 
 const submitForm = async () => {
-  try {
+  
     const eventData = {
       title: eventName.value,
       category: eventType.value,
@@ -76,14 +76,15 @@ const submitForm = async () => {
        //to add query  { queryParams: { key: 'value' } }
      );
 
-
+  if(data.value !== null) {
     console.log('Event created successfully!', data);
+      router.push('/event');
+        }
+        if(error.value !== null) {
+      errorMessage.value = error.value.message;   
+        }
 
-    router.push('/');
-  } catch (error) {
-    console.error('Error creating event:', error);
-  }
-};
+}
 
 const cancelForm = () => {
   router.push('/');

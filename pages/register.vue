@@ -66,7 +66,7 @@ function verifyEmailString(emailString) {
 }
 
 const onSubmit = async () => {
-  try {
+ 
 
     if (!isEmailValid.value) {
       throw new Error('Invalid email address');
@@ -89,21 +89,15 @@ const onSubmit = async () => {
       signupData
       );
     
-
-    const userData = {
-      email: userEmail.value, 
-      fullname: fullname.value 
-      // Add other properties as needed
-    };
-    sessionStorage.setItem('userData', JSON.stringify(userData));
-
-// Save user data to localStorage
-localStorage.setItem('userData', JSON.stringify(data));
+     console.log('registered succesfully:', data);
 
     router.push('/');
-  } catch (error) {
-    console.error('Error logging in:', error);
-    errorMessage.value = error.message;
-  }
-};
+    if(error.value !== null) {
+          // console.error('Error logging in:', error);
+      errorMessage.value = error.value.message;
+        // throw new Error(error.value.message);
+        
+        }
+  };
+
 </script> 

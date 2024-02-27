@@ -56,14 +56,12 @@ const onSubmit = async () => {
   
       const { data, error } = await handleAuth('POST', 'loginUser', loginData);
       if(data.value !== null) {
-        console.log('User authenticated successfully:', data.value);
-        localStorage.setItem('userToken', data.token);
+        console.log('User authenticated successfully:', data);
+        localStorage.setItem('userToken', data.value.token);
       router.push('/event/create');
         }
         if(error.value !== null) {
-          // console.error('Error logging in:', error);
       errorMessage.value = error.value.message;
-        // throw new Error(error.value.message);
         
         }
    
